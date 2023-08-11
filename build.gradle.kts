@@ -13,6 +13,10 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.6.0")
+    implementation("androidx.lifecycle:lifecycle-runtime:2.6.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     testImplementation(kotlin("test"))
 }
 
@@ -26,4 +30,7 @@ tasks.withType<KotlinCompile> {
 
 application {
     mainClass.set("MainKt")
+}
+
+
 }
