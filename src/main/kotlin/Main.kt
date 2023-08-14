@@ -1,3 +1,6 @@
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlin.reflect.typeOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -11,8 +14,63 @@ fun main() {
     flow()
     channelFlow()
 }
+//    tryFlow()
+//    flowOf()
+//    asFlow()
+//    flow()
+//    channelFlow()
+
+    val fruitsList = mutableListOf("Orange", "Apple", "Lime", "Apple", "Apple", "Apple")
+
+    fruitsList.size
+    println(fruitsList.last())
+    println(fruitsList.indexOf("Apple"))
+    println(fruitsList.lastIndexOf("Apple"))
+    fruitsList[1] = "OLOLOL"
+    println(fruitsList)
+    fruitsList.remove("Lime")
+    fruitsList.asFlow()
+    fruitsList.removeAt(3)
+    fruitsList.forEach(::printFruit)
 
 
+    val stateFlow = MutableStateFlow<Int>(0)
+    val sharedFlow = MutableSharedFlow<Int>()
+//    CoroutineScope(Dispatchers.IO).launch {
+//        stateFlow.collect {
+//            println(it)
+//        }
+//    }
+//
+//    stateFlow.value = 1
+//    stateFlow.value = 2
+//    stateFlow.value = 1
+//    stateFlow.value = 3
+//
+//    CoroutineScope(Dispatchers.IO).launch {
+//        stateFlow.collect{
+//            println(it.toString())
+//        }
+//    }
+
+
+    runBlocking {
+        sharedFlow.emit(1)
+        sharedFlow.emit(2)
+        sharedFlow.emit(2)
+        sharedFlow.emit(1)
+        sharedFlow.emit(3)
+        sharedFlow.collect {
+            println(it)
+        }
+    }
+
+}
+
+
+fun printFruit(fruit: String) {
+    println(fruit)
+}
 inline fun <reified T> typeIs(x : Any): Boolean {
   return x is T
 }
@@ -43,12 +101,13 @@ fun asFlow() = runBlocking {
 }
 fun flow() = runBlocking {
     flow {
-        (0..10).forEach{
+        (0..10).forEach {
             emit(it)
         }
     }
         .collect{
-            it.toString()
+            delay(1000)
+            println(it.toString())
         }
 }
 fun channelFlow() = runBlocking {
@@ -61,6 +120,10 @@ fun channelFlow() = runBlocking {
     }
 }
 
+>>>>>>> abc149e (ololo)
+fun main() {
+    testFlow()
+}
 
 fun testFlow() = runBlocking {
     val result = 1..10
@@ -76,3 +139,4 @@ fun testFlow() = runBlocking {
         println(it)
     }
 }
+
