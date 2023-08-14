@@ -1,16 +1,15 @@
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 fun main() {
-  val a: Animal = Cat()  //так можно
-//  val b: BoxOfAnimals<Animal> = BoxOfAnimals<Cat>(Cat())  //а вот так не получитс€
-  val c: BoxOfAnimals<Cat> = BoxOfAnimals<Cat>(Cat()) //“ак сработает
-  val fruitsArray = arrayOf("Apple", "Orange","Banana")
-  println(typeIs<Int>("abc"))
-  println(typeIs<String>("abc"))
+    tryFlow()
+    flowOf()
+    asFlow()
+    flow()
+    channelFlow()
 }
 
 
@@ -18,12 +17,50 @@ inline fun <reified T> typeIs(x : Any): Boolean {
   return x is T
 }
 
-
-
->>>>>>> abc149e (ololo)
-fun main() {
-    testFlow()
+fun tryFlow() = runBlocking{
+    flow {
+        (0..10).forEach {
+            emit(it)
+        }
+    }.map {
+        it * it
+    }.collect {
+        println(it.toString())
+    }
 }
+
+fun flowOf() = runBlocking {
+    flowOf(4, 2, 5, 1, 7)
+        .collect {
+            println(it.toString())
+        }
+}
+fun asFlow() = runBlocking {
+    (1..5).asFlow()
+        .collect {
+            println(it.toString())
+        }
+}
+fun flow() = runBlocking {
+    flow {
+        (0..10).forEach{
+            emit(it)
+        }
+    }
+        .collect{
+            it.toString()
+        }
+}
+fun channelFlow() = runBlocking {
+    channelFlow{
+        (0..10).forEach{
+            send(it)
+        }
+    }.collect{
+        it.toString()
+    }
+}
+
 
 fun testFlow() = runBlocking {
     val result = 1..10
