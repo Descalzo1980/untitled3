@@ -23,15 +23,14 @@ class MutexWithOwner {
         }
     }
 
-    fun isLockedByCurrentThread(): Boolean {
+    fun isLockedByCurrentThread() : Boolean {
         return owner == Thread.currentThread()
     }
 }
 
-fun main() {
+fun main() = runBlocking {
     val customMutex = MutexWithOwner()
-
-    runBlocking {
+    val job1 = CoroutineScope(Dispatchers.Default).launch {
         customMutex.lock()
         println("Поток 1 получил мьютекс")
         withContext(Dispatchers.IO) {
@@ -41,7 +40,7 @@ fun main() {
         println("Поток 1 освободил мьютекс")
     }
 
-    runBlocking {
+    val job2 = CoroutineScope(Dispatchers.Default).launch {
         withContext(Dispatchers.IO) {
             Thread.sleep(500)
         }
@@ -50,4 +49,13 @@ fun main() {
         customMutex.unlock()
         println("Поток 2 освободил мьютекс")
     }
+
+    customMutex.start()
+    customMutex.doLogic()
+
+    job1.join()
+    job2.join()
+
+
+
 }
