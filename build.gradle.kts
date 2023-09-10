@@ -15,9 +15,11 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     testImplementation(kotlin("test"))
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
 }
 
 tasks.test {
