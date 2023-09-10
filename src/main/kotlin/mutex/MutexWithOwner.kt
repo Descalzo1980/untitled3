@@ -1,9 +1,7 @@
 package mutex
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.withContext
 
 class MutexWithOwner {
     private val mutex = Mutex()
@@ -49,9 +47,6 @@ fun main() = runBlocking {
         customMutex.unlock()
         println("Поток 2 освободил мьютекс")
     }
-
-    customMutex.start()
-    customMutex.doLogic()
 
     job1.join()
     job2.join()
